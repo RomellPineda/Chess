@@ -1,14 +1,15 @@
-# source: https://www.youtube.com/watch?v=X-e0jk4I938
+# inspired by: https://www.youtube.com/watch?v=X-e0jk4I938
 import pygame
 
 pygame.init()
 WIDTH = 1000
 HEIGHT = 900
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
+computer_font = 'assets/fonts/computeraidlight.ttf'
 pygame.display.set_caption('  do you even chess, bro?!  ')
-font = pygame.font.Font('freesansbold.ttf', 28)
-medium_font = pygame.font.Font('freesansbold.ttf', 40)
-big_font = pygame.font.Font('freesansbold.ttf', 44)
+font = pygame.font.Font(computer_font, 28)
+medium_font = pygame.font.Font(computer_font, 40)
+big_font = pygame.font.Font(computer_font, 44)
 timer = pygame.time.Clock()
 fps = 60
 
@@ -104,16 +105,16 @@ def draw_board():
         pygame.draw.rect(screen, 'light gray', [0, 800, WIDTH, 100])
         pygame.draw.rect(screen, 'cadetblue2', [0, 800, WIDTH, 100], 5)
         pygame.draw.rect(screen, 'cadetblue2', [800, 0, 200, HEIGHT], 5)
-        status_text = ['white: select a piece to move', 'white: select a destination', 'black: select a piece to move', 'black: select a destination']
+        status_text = ['WHITE: SELECT A PIECE TO MOVE', 'WHITE: SELECT A DESTINATION', 'BLACK: SELECT A PIECE TO MOVE', 'BLACK: SELECT A DESTINATION']
         screen.blit(big_font.render(status_text[turn_step], True, 'black'), (20, 820))
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 1)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 1)
-        screen.blit(medium_font.render('forfeit', True, 'black'), (810, 830))
+        screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
         if white_promote or black_promote:
             pygame.draw.rect(screen, 'gray', [0, 800, WIDTH - 200, 100])
             pygame.draw.rect(screen, 'gold', [0, 800, WIDTH - 200, 100], 5)
-            screen.blit(big_font.render('Select Piece to Promote Pawn', True, 'black'), (20, 820))
+            screen.blit(big_font.render('SELECT PIECE TO PROMOTE PAWN', True, 'black'), (20, 820))
 
 def draw_pieces():
     for i in range(len(white_pieces)):
@@ -362,9 +363,9 @@ def draw_check():
 
 # game over logic
 def draw_game_over():
-    pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
-    screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
-    screen.blit(font.render('press return to restart...', True, 'white'), (210, 240))
+    pygame.draw.rect(screen, 'black', [200, 300, 500, 80])
+    screen.blit(font.render(f'{winner} WON THE GAME!', True, 'white'), (210, 310))
+    screen.blit(font.render('PRESS RETURN TO RESTART...', True, 'white'), (210, 340))
 
 # check en passant
 def check_ep(old_coords, new_coords):
@@ -544,7 +545,7 @@ while run:
             click_coords = (x_coord, y_coord)
             if turn_step <= 1:
                 if click_coords == (8, 8) or click_coords == (9, 8):
-                    winner = 'black'
+                    winner = 'BLACK'
                 if click_coords in white_locations:
                     selection = white_locations.index(click_coords)
                     # check what piece is selected, so you can only draw castling moves if king is selected
@@ -559,7 +560,7 @@ while run:
                         black_piece = black_locations.index(click_coords)
                         captured_pieces_white.append(black_pieces[black_piece])
                         if black_pieces[black_piece] == 'king':
-                            winner = 'white'
+                            winner = 'WHITE'
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
                         black_moved.pop(black_piece)
@@ -594,7 +595,7 @@ while run:
                             valid_moves = []
             if turn_step > 1:
                 if click_coords == (8, 8) or click_coords == (9, 8):
-                    winner = 'white'
+                    winner = 'WHITE'
                 if click_coords in black_locations:
                     selection = black_locations.index(click_coords)
                     # check what piece is selected, so you can only draw castling moves if king is selected
@@ -609,7 +610,7 @@ while run:
                         white_piece = white_locations.index(click_coords)
                         captured_pieces_black.append(white_pieces[white_piece])
                         if white_pieces[white_piece] == 'king':
-                            winner = 'black'
+                            winner = 'BLACK'
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
                         white_moved.pop(white_piece)
